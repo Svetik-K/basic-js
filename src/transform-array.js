@@ -29,14 +29,14 @@ function transform(arr) {
       if(arr[i] === '--discard-prev') {
         modified.pop();
       }
-      else if(arr[i] === '--double-prev') {
+      else if(arr[i] === '--double-prev' && i !== 0) {
         modified.push(arr[i-1]);
       }
-      else if(arr[i] === '--double-next') {
+      else if(arr[i] === '--double-next' && i !== arr.length - 1) {
         modified.push(arr[i+1]);
       }
       else if(arr[i] === '--discard-next') {
-        arr.splice(i+1, 1);
+        arr.splice(i, 2);
       }
     }
   }
