@@ -35,4 +35,3 @@ module.exports = {
   getMatrixElementsSum
 };
 
-// let sum = matrix[0].reduce((sum, num) => sum + num, 0);
