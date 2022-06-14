@@ -17,13 +17,7 @@ class DepthCalculator {
     if(arr.filter(Array.isArray).length === 0 || arr === []) {
       return 1;
     }else {
-      let sum = 1;
-      for(let item of arr) {
-        if(Array.isArray(item)) {
-          sum += calculateDepth(item);
-        }
-      };
-      return sum; 
+      
     }
   }
 }
