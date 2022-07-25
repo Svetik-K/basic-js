@@ -19,17 +19,79 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  constructor(variant) {
+    this.variant = variant;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, key) {
+    if(arguments == null || message == null || key == null) {
+      throw new Error('Incorrect arguments!');
+    }
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+
+    let result = '';
+    let keyIndex = 0;
+
+    for(let i = 0; i < message.length; i++) {
+      if(!ALPHABET.includes(message[i]) || message[i] === ' ') {
+        result += message[i];
+      } else {
+        let resultIndex = (ALPHABET.indexOf(message[i]) + ALPHABET.indexOf(key[keyIndex])) % 26;
+        result += ALPHABET[resultIndex];
+        keyIndex++;
+        if(keyIndex === key.length) {
+          keyIndex = 0;
+        }  
+      }
+    }
+
+    if(this.variant === false) {
+      return result.split('').reverse().join('');
+    } else {
+      return result;
+    }
+   
+  }
+
+  decrypt(encryptedMessage, key) {
+    if(arguments == null || encryptedMessage == null || key == null) {
+      throw new Error('Incorrect arguments!');
+    }
+    encryptedMessage = encryptedMessage.toUpperCase();
+    key = key.toUpperCase();
+
+    let result = '';
+    let keyIndex = 0;
+
+    for(let i = 0; i < encryptedMessage.length; i++) {
+      if(!ALPHABET.includes(encryptedMessage[i]) || encryptedMessage[i] === ' ') {
+        result += encryptedMessage[i];
+      } else {
+        let decodedIndex = (ALPHABET.indexOf(encryptedMessage[i]) + 26 - ALPHABET.indexOf(key[keyIndex])) % 26;
+        result += ALPHABET[decodedIndex];
+        keyIndex++;
+        if(keyIndex === key.length) {
+          keyIndex = 0;
+        } 
+      }   
+    }
+
+    if(this.variant === false) {
+      return result.split('').reverse().join('');
+    } else {
+      return result;
+    }
   }
 }
+
 
 module.exports = {
   VigenereCipheringMachine
 };
+
+   
