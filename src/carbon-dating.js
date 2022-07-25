@@ -19,14 +19,18 @@ const HALF_LIFE_PERIOD = 5730;
  */
 function dateSample(sampleActivity) {
 
-  if(typeof sampleActivity !== 'string' || isNaN(Number(sampleActivity)) || sampleActivity == null) {
+  if(typeof sampleActivity !== 'string' || isNaN(Number(sampleActivity))) {
+    return false;
+  }
+  else if(sampleActivity == null || Number(sampleActivity) <= 0 || Number(sampleActivity) >= 15) {
     return false;
   }
 
-  return Math.ceil(Math.log((MODERN_ACTIVITY / Number(sampleActivity))) / (Math.LN2() / HALF_LIFE_PERIOD));
-
-}
+  return Math.ceil(Math.log2((Number(sampleActivity)) / MODERN_ACTIVITY) * -(HALF_LIFE_PERIOD));
  
+}
+
+
 module.exports = {
   dateSample
 };
